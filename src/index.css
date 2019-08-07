@@ -136,3 +136,34 @@ body {
 .account-list .plus-container{
   margin-left: 130px;
 }
+.l-portfolio .portfolio-wrapper {
+  padding: 75px 90px 0 90px;
+}
+.l-portfolio .navigation-wrapper {
+  display: flex;
+}
+.portfolio-wrapper .buy-sell-trade,
+.portfolio-wrapper .user-profile {
+  width: 50%;
+}
+.user-profile ul {
+  float: right;
+}
+.navigation-wrapper ul li {
+  margin-left: 40px;
+}
+.portfolio-wrapper .card-wrapper button{
+  width: 140px;
+  height: 45px;
+  border-radius: 9999em;
+  color: #ABACBD;
+  background-color: #FFFFFF;
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.card-wrapper button img {
+  width: 25px;
+  margin-right: 15px;
+}

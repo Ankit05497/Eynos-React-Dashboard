@@ -2,10 +2,115 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 
+class Navigation extends React.Component {
+    handleClick(val1,val2,val3,val4,val5,val6){
+        this.props.buySell(val1);
+        this.props.trade(val2);
+        this.props.accounts(val3);
+        this.props.portfolio(val4);
+        this.props.card(val5);
+        this.props.home(val6);
+    }
+    render(){
+        return(
+            <div className="navigation-wrapper">
+                <div className="buy-sell-trade links">
+                    <ul>
+                        <li onClick={() => this.handleClick(true,false,false,false,false,false)}><a href="#">Buy/Sell</a></li>
+                        <li onClick={() => this.handleClick(false,true,false,false,false,false)}><a href="#">Trade</a></li>
+                    </ul>
+                </div>
+                <div className="user-profile links">
+                    <ul>
+                        <li onClick={() => this.handleClick(false,false,true,false,false,false)}><a href="#">Accounts</a></li>
+                        <li onClick={() => this.handleClick(false,false,false,true,false,false)}><a href="#">Portfolio</a></li>
+                        <li onClick={() => this.handleClick(false,false,false,false,true,false)}><a href="#">Cards</a></li>
+                        <li onClick={() => this.handleClick(false,false,false,false,false,true)}><a href="#">Home</a></li>
+                    </ul>
+                </div>
+            </div>
+        )
+    }
+}
+
+class CardView extends React.Component {
+    render(){
+        return(
+            <div class="card-wrapper">
+                <button type="button"><img src="./assets/maestro.png"/><span>{this.props.card}</span></button>
+            </div>
+        )
+    }
+}
+
+class NavigationContent extends React.Component {
+    render(){
+        if(this.props.isBuySell) {
+            return (
+                <CardView card={this.props.card} />
+            )
+        }
+        else {
+            return(
+                <p>No Design for other tabs given</p>
+            )
+        }
+    }
+}
+
 class StockPortfolio extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isBuySell: true,
+            isTrade: false,
+            isAccounts: false,
+            isPortfolio:false,
+            isCards: false,
+            isHome:false
+        }
+
+    }
+    handleBuySell = (isBuySell) => {
+        this.setState({
+            isBuySell: isBuySell
+        })
+    }
+
+    handleTrade = (isTrade) => {
+        this.setState({
+            isTrade:isTrade
+        })
+    }
+
+    handlaAccounts = (isAccount) => {
+        this.setState({
+            isAccounts:isAccount
+        })
+    }
+    
+    handlePortfolio = (isPortfolio) => {
+        this.setState({
+            isPortfolio: isPortfolio
+        })
+    }
+    handleCards = (isCard) => {
+        this.setState({
+            isCards:isCard
+        })
+    }
+    handleaHome = (isHome) => {
+        this.setState({
+            isHome: isHome
+        })
+    }
     render() {
         return(
             <div className="l-portfolio">
+                <div className="portfolio-wrapper">
+                    <Navigation buySell={this.handleBuySell} trade={this.handleTrade} accounts={this.handlaAccounts} portfolio={this.handlePortfolio} card={this.handleCards} home={this.handleaHome}/>
+                    <NavigationContent isBuySell={this.state.isBuySell} card={this.props.card}/>
+                </div>
             </div>
         );
     }
@@ -216,8 +321,10 @@ class Dashboard extends React.Component {
         this.state = {
             balance: '$0',
             notification_number: '0',
-            notifications: []
-
+            notifications: [],
+            transaction_amount: '0',
+            transactions: '0',
+            cardType: ""
         }
     }
     
@@ -236,7 +343,8 @@ class Dashboard extends React.Component {
                     notification_number: response.data[0].notification_number,
                     notifications: response.data[0].notifications,
                     transaction_amount: response.data[0].transaction_amount,
-                    transactions:  response.data[0].transaction_number
+                    transactions:  response.data[0].transaction_number,
+                    cardType: response.data[0].cardType
                 })
             })
         });
@@ -249,7 +357,7 @@ class Dashboard extends React.Component {
     render(){
         return(
             <div className="l-dashboard">
-                <StockPortfolio />
+                <StockPortfolio balance={this.state.balance} card={this.state.cardType}/>
                 <PersonalBalance balance={this.state.balance} notif={this.state.notification_number} notifications={this.state.notifications} personalDetails={this.state}/>
             </div>
         );
