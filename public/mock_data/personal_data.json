@@ -1,0 +1,15 @@
+{
+    "data": [{
+      "type": "personal-stocks",
+      "balance":"$ 3458",
+      "notification_number":"5",
+      "cardType": "Debit Card",
+      "notifications": [
+          "this is the notifcations",
+          "this is the notifcations",
+          "this is the notifcations",
+          "this is the notifcations",
+          "this is the notifcations"
+      ]
+    }]
+  }

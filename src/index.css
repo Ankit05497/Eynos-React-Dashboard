@@ -1,13 +1,63 @@
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  background-color: #E3E4E8;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
-    monospace;
+.links ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+.links li {
+  display: inline;
+}
+
+.links li a {
+  text-decoration: none;
+  color: #BFC0CB;
+}
+
+.links li a:active,
+.links li a:hover{
+  color: #4E4E4E;
+  border-bottom: 2px solid #F1692C;
+}
+
+.l-dashboard {
+  margin: 130px 60px;
+  width: 1330px;
+  height: 800px;
+  display:flex;
+  flex-direction: row;
+}
+
+.l-portfolio {
+  width: 1032px;
+  height: 100%;
+  background-color: #F5F7FB;
+  border-radius: 25px 0 0 25px;
+}
+
+.l-personal-balance {
+  width: 268px;
+  height: 100%;
+  background-color: #FFFFFF;
+  border-radius: 0 25px 25px 0;
+}
+
+.l-personal-balance .links {
+  margin:75px 40px 45px 45px;
+}
+
+.l-personal-balance .links a {
+  margin-right: 16px;
+}
+.l-personal-balance .links a:nth-last-child(2){
+  margin-right: 0;
+}
+
+.l-personal-balance .links button{
+  background-color: #F1692C;
+  color:#FFEDDF;
+  border-radius: 8px;
 }
