@@ -4,6 +4,8 @@
       "balance":"$ 3458",
       "notification_number":"5",
       "cardType": "Debit Card",
+      "transaction_amount":"$300",
+      "transaction_number":"2",
       "notifications": [
           "this is the notifcations",
           "this is the notifcations",

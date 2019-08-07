@@ -62,7 +62,7 @@ body {
   border-radius: 8px;
 }
 .balanceView {
-  margin: 0 50px 20px 50px;
+  margin: 0 50px 50px 50px;
 }
 
 .balanceView img{
@@ -73,4 +73,26 @@ body {
 
 .balanceView .balance{
   font-size:34px;
+}
+
+.balanceView .accordion-view {
+  font-size: 13px;
+  color: #C2C4CD;
+}
+
+.balanceView .accordion-view .amount{
+  margin-right: 5px;
+}
+
+.balanceView .accordion-view .message {
+  border-bottom: 1px dotted #C2C4CD;
+}
+
+.balanceView button {
+  width: 140px;
+  height: 32px;
+  background-color: transparent;
+  border-radius: 9999em;
+  color: #333333;
+  font-weight: bold;
 }

@@ -27,12 +27,28 @@ class NavLinks extends React.Component {
 class Accordion extends React.Component {
     render(){
         if(this.props.isOpen) return(
-            <span onClick={()=> this.props.isClicked(false)}><img src="./assets/collapse-arrow.png"/></span>
+            <span onClick={()=> this.props.isClicked(false)}><img src="./assets/collapse-arrow.png" alt="Collapse"/></span>
         )
             
         else return(
-            <span onClick={() => this.props.isClicked(true)}><img src="./assets/expand-arrow.png"/></span>
+            <span onClick={() => this.props.isClicked(true)}><img src="./assets/expand-arrow.png" alt="Expand"/></span>
         )
+    }
+}
+
+class AccordionContent extends React.Component {
+    render(){
+        if(this.props.view === true) 
+        return(
+            <p>Accordion Content when open</p>
+        )
+        else
+            return(
+                <p className="accordion-view">
+                    <span className="amount">{this.props.transactionDetails.transaction_amount}</span>
+                    <span className="message">{this.props.transactionDetails.transactions} transacations in process</span>
+                </p>
+            )
     }
 }
 
@@ -59,6 +75,12 @@ class PersonalizedView extends React.Component {
                         <span className="balance">{this.props.balance}</span>
                         <Accordion  isClicked={this.handleClick} isOpen={this.state.isAccordionOpen}/>
                     </p>
+                    <div className="accordionView">
+                        <AccordionContent view={this.state.isAccordionOpen} transactionDetails={this.props.details}/>
+                    </div>
+                    <div>
+                        <button type="button"> Add a Portfolio</button>
+                    </div>
                 </div>
             )
         }
@@ -90,7 +112,7 @@ class PersonalBalance extends React.Component {
         return(
             <div className="l-personal-balance">
                 <NavLinks notif={this.props.notif} tabClicked={this.handleTab} />
-                <PersonalizedView isBalance={this.state.isBalanceTab} notifications={this.props.notifications} balance={this.props.balance} />
+                <PersonalizedView isBalance={this.state.isBalanceTab} notifications={this.props.notifications} balance={this.props.balance} details={this.props.personalDetails}/>
             </div>
         );
     }
@@ -120,7 +142,9 @@ class Dashboard extends React.Component {
                 _self.setState({
                     balance: response.data[0].balance,
                     notification_number: response.data[0].notification_number,
-                    notifications: response.data[0].notifications
+                    notifications: response.data[0].notifications,
+                    transaction_amount: response.data[0].transaction_amount,
+                    transactions:  response.data[0].transaction_number
                 })
             })
         });
@@ -134,7 +158,7 @@ class Dashboard extends React.Component {
         return(
             <div className="l-dashboard">
                 <StockPortfolio />
-                <PersonalBalance balance={this.state.balance} notif={this.state.notification_number} notifications={this.state.notifications}/>
+                <PersonalBalance balance={this.state.balance} notif={this.state.notification_number} notifications={this.state.notifications} personalDetails={this.state}/>
             </div>
         );
     }
