@@ -28,8 +28,7 @@ class Accordion extends React.Component {
     render(){
         if(this.props.isOpen) return(
             <span onClick={()=> this.props.isClicked(false)}><img src="./assets/collapse-arrow.png" alt="Collapse"/></span>
-        )
-            
+        )    
         else return(
             <span onClick={() => this.props.isClicked(true)}><img src="./assets/expand-arrow.png" alt="Expand"/></span>
         )
@@ -94,11 +93,86 @@ class PersonalizedView extends React.Component {
     }
 }
 
+class AccountView extends React.Component {
+    render(){
+        return(
+            <div className="links account-view-links">
+                <ul>
+                    <li onClick={() => this.props.accountTab(true)}><a href="#">Accounts</a></li>
+                    <li onClick={() => this.props.accountTab(false)}><a href="#">Add funds</a></li>
+                </ul>
+            </div>
+        );
+    }
+}
+
+class AccountStockView extends React.Component {
+    render(){
+        if(this.props.isAccount) {
+            return(<AccountDetails />)
+        }
+        else {
+            return (<p>Add Fund Tab Active</p>)
+        }
+    }
+}
+
+class CreateList extends React.Component {
+    render(){
+        if(this.props.data) {
+            var items = this.props.data;
+            const listItems = Object.keys(items).map((key) => <li key={key}>{items[key].stock}</li>)
+            return (
+            <ul>{listItems}</ul>
+            )
+        }
+        else {
+            return (<p>Nothing to show</p>)
+        }
+    }
+}
+
+class AccountDetails extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            accounts : null
+        }
+    }
+    async getData(){
+        const _self = this;
+        await fetch('./mock_data/account_data.json',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((responseText) => {
+            const resp = responseText.json();
+            resp.then((response) => {
+                _self.setState({
+                    accounts: response.data[0]
+                })
+            })
+        });
+    }
+
+    componentDidMount(){
+        this.getData();
+    }
+
+    render() {
+         return (
+             <CreateList data={this.state.accounts}/>
+         )
+    }
+}
+
 class PersonalBalance extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isBalanceTab : true
+            isBalanceTab : true,
+            isAcccountsTab: true
         }
     }
 
@@ -108,11 +182,19 @@ class PersonalBalance extends React.Component {
         })
     }
 
+    handleAccountTab = (isAcccountsTab) => {
+        this.setState({
+            isAcccountsTab: isAcccountsTab
+        })
+    }
+
     render() {
         return(
             <div className="l-personal-balance">
                 <NavLinks notif={this.props.notif} tabClicked={this.handleTab} />
                 <PersonalizedView isBalance={this.state.isBalanceTab} notifications={this.props.notifications} balance={this.props.balance} details={this.props.personalDetails}/>
+                <AccountView accountTab={this.handleAccountTab}/>
+                <AccountStockView isAccount={this.state.isAcccountsTab}/>
             </div>
         );
     }

@@ -52,6 +52,11 @@ body {
 .l-personal-balance .links a {
   margin-right: 16px;
 }
+.l-personal-balance .account-view-links {
+  margin:0;
+  padding: 0 34px 20px 50px;
+  border-bottom: 1px solid #C2C4CD;
+}
 .l-personal-balance .links a:nth-last-child(2){
   margin-right: 0;
 }
