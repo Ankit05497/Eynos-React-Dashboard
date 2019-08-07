@@ -26,6 +26,7 @@ class NavLinks extends React.Component {
 
 class PersonalizedView extends React.Component {
     render(){
+        var listItems = this.props.notifications.map((notification, index) => <li key={index}>{notification}</li>)
         if (this.props.isBalance === true) {
             return(
                 <div className="balance">{this.props.balance}</div>
@@ -34,7 +35,7 @@ class PersonalizedView extends React.Component {
         else {
             return(
                 <div className="notifications">
-                    Notifications
+                    <ul>{listItems}</ul>
                 </div>
             )
         }
