@@ -10,6 +10,7 @@ body {
 
 .links li {
   display: inline;
+  font-size: 14px;
 }
 
 .links li a {
@@ -23,12 +24,21 @@ body {
   border-bottom: 2px solid #F1692C;
 }
 
+.account-view-links .add-funds {
+  margin-left: 50px;
+}
+
+.account-view-links .add-funds a{
+  color: #F1692C;
+}
+
 .l-dashboard {
   margin: 130px 60px;
   width: 1330px;
   height: 800px;
   display:flex;
   flex-direction: row;
+  overflow: hidden;
 }
 
 .l-portfolio {
@@ -100,4 +110,29 @@ body {
   border-radius: 9999em;
   color: #333333;
   font-weight: bold;
+}
+.l-personal-balance .account .account-list {
+  display: flex;
+}
+.account-list {
+  font-size: 14px;
+  border-bottom: 1px dotted #C2C4CD;
+  margin: 24px 0;
+}
+.account-list p{
+  padding: 0;
+  margin: 0;
+}
+
+.account-list img {
+  margin-top: 50%;
+  width: 12px;
+}
+.account-list .account-amount {
+  color: #999BA8;
+  margin-top: 10px;
+  margin-bottom: 20px;
+}
+.account-list .plus-container{
+  margin-left: 130px;
 }

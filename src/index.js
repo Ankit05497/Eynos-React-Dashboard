@@ -99,7 +99,7 @@ class AccountView extends React.Component {
             <div className="links account-view-links">
                 <ul>
                     <li onClick={() => this.props.accountTab(true)}><a href="#">Accounts</a></li>
-                    <li onClick={() => this.props.accountTab(false)}><a href="#">Add funds</a></li>
+                    <li className="add-funds" onClick={() => this.props.accountTab(false)}><a href="#">Add funds</a></li>
                 </ul>
             </div>
         );
@@ -121,9 +121,19 @@ class CreateList extends React.Component {
     render(){
         if(this.props.data) {
             var items = this.props.data;
-            const listItems = Object.keys(items).map((key) => <li key={key}>{items[key].stock}</li>)
+            const listItems = Object.keys(items).map((key) => (
+            <li key={key} className="account-list">
+                <div>
+                    <p>{items[key].stock}</p>
+                    <p class="account-amount">{items[key].amount}</p>
+                </div>
+                <div class="plus-container">
+                    <img src="./assets/plus.png" alt="plus"/>
+                </div>
+            </li>
+            ))
             return (
-            <ul>{listItems}</ul>
+            <ul className="account">{listItems}</ul>
             )
         }
         else {
