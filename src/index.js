@@ -24,12 +24,42 @@ class NavLinks extends React.Component {
     }
 }
 
+class Accordion extends React.Component {
+    render(){
+        if(this.props.isOpen) return(
+            <span onClick={()=> this.props.isClicked(false)}><img src="./assets/collapse-arrow.png"/></span>
+        )
+            
+        else return(
+            <span onClick={() => this.props.isClicked(true)}><img src="./assets/expand-arrow.png"/></span>
+        )
+    }
+}
+
 class PersonalizedView extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isAccordionOpen : false
+        }
+    }
+
+    handleClick = (isOpen) => {
+        this.setState({
+            isAccordionOpen: isOpen
+        })
+    }
+
     render(){
         var listItems = this.props.notifications.map((notification, index) => <li key={index}>{notification}</li>)
         if (this.props.isBalance === true) {
             return(
-                <div className="balance">{this.props.balance}</div>
+                <div className="balanceView">
+                    <p>
+                        <span className="balance">{this.props.balance}</span>
+                        <Accordion  isClicked={this.handleClick} isOpen={this.state.isAccordionOpen}/>
+                    </p>
+                </div>
             )
         }
         else {

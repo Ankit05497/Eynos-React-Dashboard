@@ -61,3 +61,16 @@ body {
   color:#FFEDDF;
   border-radius: 8px;
 }
+.balanceView {
+  margin: 0 50px 20px 50px;
+}
+
+.balanceView img{
+  width: 16px;
+  height: 16px;
+  margin-left: 12px;
+}
+
+.balanceView .balance{
+  font-size:34px;
+}
