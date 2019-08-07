@@ -143,7 +143,9 @@ body {
   display: flex;
 }
 .portfolio-wrapper .buy-sell-trade,
-.portfolio-wrapper .user-profile {
+.portfolio-wrapper .user-profile,
+.card-wrapper .button-wrapper,
+.card-wrapper .window-icon {
   width: 50%;
 }
 .user-profile ul {
@@ -152,18 +154,49 @@ body {
 .navigation-wrapper ul li {
   margin-left: 40px;
 }
+.card-wrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 40px;
+}
 .portfolio-wrapper .card-wrapper button{
   width: 140px;
   height: 45px;
   border-radius: 9999em;
   color: #ABACBD;
   background-color: #FFFFFF;
-  margin-top: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 0;
 }
+
 .card-wrapper button img {
   width: 25px;
   margin-right: 15px;
+}
+
+.card-wrapper .window-icon img {
+  float: right;
+}
+.portfolio-view-wrapper {
+  margin-top: 24px;
+  display: flex;
+}
+
+.portfolio-view-wrapper .mobile-app-ad{
+  width: 200px;
+  height: 325px;
+  border-radius: 10px;
+}
+.portfolio-view-wrapper .mobile-app-ad img{
+  width: 200px;
+  height: 325px;
+}
+.portfolio-view-wrapper .portfolio-description{
+  width: 635px;
+  height: 325px;
+  background-color: #FFFFFF;
+  border-radius: 10px;
+  margin-left: 16px;
 }

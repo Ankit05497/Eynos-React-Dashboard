@@ -37,7 +37,19 @@ class CardView extends React.Component {
     render(){
         return(
             <div class="card-wrapper">
-                <button type="button"><img src="./assets/maestro.png"/><span>{this.props.card}</span></button>
+                <div class="button-wrapper"><button type="button"><img src="./assets/maestro.png"/><span>{this.props.card}</span></button></div>
+                <div class="window-icon"><img src="./assets/windows-client.png"/></div>
+            </div>
+        )
+    }
+}
+
+class PortfolioView extends React.Component {
+    render(){
+        return (
+            <div class="portfolio-view-wrapper">
+                <div className="mobile-app-ad"><img alt="mobileAd" src="./assets/crypto-image.jpg"/></div>
+                <div className="portfolio-description"></div>
             </div>
         )
     }
@@ -47,7 +59,10 @@ class NavigationContent extends React.Component {
     render(){
         if(this.props.isBuySell) {
             return (
-                <CardView card={this.props.card} />
+                <div class="navigation-content-wrapper">
+                    <CardView card={this.props.card} />
+                    <PortfolioView />
+                </div>
             )
         }
         else {
