@@ -261,20 +261,27 @@ body {
   background-color: #ffffff;
   margin-left: 20px;
 }
-.exchange .current-trend-wrapper {
+.exchange .current-trend-heading {
   padding: 40px 30px;
 }
-.exchange-list {
+.exchange-list-wrapper{
   display: flex;
   align-items: center;
+}
+.exchange-list {
   font-size: 14px;
-  padding: 14px 0;
+  padding: 14px 30px;
+}
+.list-open {
+  background-color: #F6F8FC;
 }
 .exchange-list p{
   margin: 0;
 }
 .current-trend-wrapper ul{
   padding: 0;
+  list-style-type: none;
+  margin: 0;
 }
 .exchange-list img{
   width: 12px;
@@ -296,4 +303,21 @@ body {
   margin-right: 20px;
   margin-left: 10px;
   border-bottom: 1px dotted #C2C4CD;
+}
+.accordion-content-trend input {
+  width: 80px;
+  height: 28px;
+  margin-right: 10px;
+}
+.accordion-content-trend button {
+  width: 60px;
+  height: 28px;
+  border-radius: 9999em;
+  margin-left: 4px;
+}
+.accordion-content-trend .buy-button{
+  background-color: #84CD95;
+}
+.accordion-content-trend .sell-button{
+  background-color: #ffffff;
 }

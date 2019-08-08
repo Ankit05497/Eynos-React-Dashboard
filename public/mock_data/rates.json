@@ -25,12 +25,14 @@
             "Bid":{
                 "currency1":"BTC",
                 "currency2":"XPR",
+                "number":"1",
                 "rate":"143",
                 "average":"500 XPR"
             },
             "Change":{
                 "currency1":"MNR",
                 "currency2":"USD",
+                "number":"1",
                 "rate":"143",
                 "average":"12 ETH"
             }

@@ -66,35 +66,54 @@ class Select extends React.Component {
     }
 }
 
+class AcccordionCurrentTrend extends React.Component {
+    render(){
+        if(this.props.view) return (
+            <div className="accordion-content-trend">
+                <input type="text" placeholder={this.props.content.number + this.props.content.currency1}/>
+                <input type="text" placeholder={"=" + this.props.content.rate + " " + this.props.content.currency2}/>
+                <button type="button" className="buy-button">Buy</button>
+                <button type="button" className="sell-button">Sell</button>
+            </div>
+        )
+        else return null
+    }
+}
+
 class CurrentTrend extends React.Component{
     constructor(props) {
         super(props);
         this.state = {
-            isAccordionOpen : false
+            isAccordionOpen : Array(2).fill(false)
         }
     }
 
     handleClick = (isOpen) => {
+        const tempState = this.state.isAccordionOpen.slice();
+        tempState[isOpen[1]] = isOpen[0];
         this.setState({
-            isAccordionOpen: isOpen
+            isAccordionOpen: tempState
         })
     }
     
     render(){
         if(this.props.trends){
             const value = this.props.trends;
-            const exchangeValue = Object.keys(value).map((key) => (
-                <li key={key} className="exchange-list">
-                    <div class="exchange-container">
-                        <p className="exchange-method">{key}</p>
-                        <p class="currency-convert bold">{value[key].currency1}/{value[key].currency2}</p>
-                    </div>
-                    <div class="average-container">
-                        <div class="average-container-wrapper">
-                            <span className="average">Average</span><span className="average-value bold">{value[key].average}</span>
-                            <Accordion isOpen={this.handleClick}/>
+            const exchangeValue = Object.keys(value).map((key,index) => (
+                <li key={key} className={this.state.isAccordionOpen[index] ? "list-open exchange-list" : "exchange-list"}>
+                    <div class="exchange-list-wrapper">
+                        <div class="exchange-container">
+                            <p className="exchange-method">{key}</p>
+                            <p class="currency-convert bold">{value[key].currency1}/{value[key].currency2}</p>
+                        </div>
+                        <div class="average-container">
+                            <div class="average-container-wrapper">
+                                <span className="average">Average</span><span className="average-value bold">{value[key].average}</span>
+                                <Accordion isOpen={this.handleClick} index={index}/>
+                            </div>
                         </div>
                     </div>
+                    <AcccordionCurrentTrend view={this.state.isAccordionOpen[index]} content={this.props.trends[key]}/>
                 </li>
                 
             ))
@@ -180,29 +199,31 @@ class RateTable extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            isAccordionOpen : false
+            isAccordionOpen : Array(3).fill(false)
         }
     }
 
     handleClick = (isOpen) => {
+        const tempState = this.state.isAccordionOpen.slice();
+        tempState[isOpen[1]] = isOpen[0];
         this.setState({
-            isAccordionOpen: isOpen
+            isAccordionOpen: tempState
         })
     }
     render(){
         if(this.props.rates){
             const value = this.props.rates;
             const currency = this.props.currency;
-            const exchangeValue = Object.keys(value).map((key) => (
+            const exchangeValue = Object.keys(value).map((key,index) => (
                 <li key={key} className="currency-list">
                     <div>
                         <span class="crypto-currency">{key} = </span>
                         <span class="currency-amount">{currency === 'INR' ? value[key].INR : value[key].USD}</span>
                         <span className={value[key].changeType === "positive"? "positive change" : "negative change"}>{value[key].change}
-                        <Accordion isOpen={this.handleClick}/>
+                        <Accordion isOpen={this.handleClick} index={index}/>
                         </span>
                     </div>
-                    <AccordionContentExchange view={this.state.isAccordionOpen} transactionDetails={this.props.details}/>
+                    <AccordionContentExchange view={this.state.isAccordionOpen[index]} transactionDetails={this.props.details}/>
                 </li>
                 
             ))
@@ -315,7 +336,7 @@ class Accordion extends React.Component {
         this.setState({
             isOpen : !this.state.isOpen
         })
-        this.props.isOpen(this.state.isOpen);
+        this.props.isOpen([this.state.isOpen,this.props.index]);
     }
     render(){
         if(!this.state.isOpen) return(
@@ -353,18 +374,19 @@ class PersonalizedView extends React.Component {
 
     handleClick = (isOpen) => {
         this.setState({
-            isAccordionOpen: isOpen
+            isAccordionOpen: isOpen[0]
         })
     }
 
     render(){
-        var listItems = this.props.notifications.map((notification, index) => <li key={index}>{notification}</li>)
+        var listItems = this.props.notifications.map((notification, index) => <li key={index}>{notification}</li>);
+        const index = 0;
         if (this.props.isBalance === true) {
             return(
                 <div className="balanceView">
                     <p>
                         <span className="balance">{this.props.balance}</span>
-                        <Accordion  isOpen={this.handleClick}/>
+                        <Accordion  isOpen={this.handleClick} index={index}/>
                     </p>
                     <div className="accordionView">
                         <AccordionContent view={this.state.isAccordionOpen} transactionDetails={this.props.details}/>
