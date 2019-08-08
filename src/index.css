@@ -4,6 +4,9 @@ body {
 .bold {
   font-weight: bold;
 }
+.secondary-color {
+  color: #C2C4CD;
+}
 .links ul{
   list-style-type: none;
   margin: 0;
@@ -236,10 +239,10 @@ body {
 .exchange-wrapper .currency-list .change{
   float: right;
 }
-.exchange-wrapper .currency-list .positive{
+.positive{
   color: #91CA9C;
 }
-.exchange-wrapper .currency-list .negative{
+.negative{
   color: #E5716F;
 }
 .exchange-wrapper .currency-list .crypto-currency{
@@ -320,4 +323,54 @@ body {
 }
 .accordion-content-trend .sell-button{
   background-color: #ffffff;
+}
+.portfolio-description .portfolio-detail-wrapper{
+  padding: 40px 30px;
+  width: 400px;
+}
+.portfolio-detail-navigation {
+  display: flex;
+}
+.portfolio-heading,
+.portfolio-navigation{
+  width: 50%;
+}
+.portfolio-navigation li{
+  margin-right: 30px;
+}
+.portfolio-main-wrapper {
+  display: flex;
+}
+.portfolio-amount-wrapper {
+  width: 188px;
+  height: 215px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-left: 1px solid #C2C4CD;
+}
+.portfolio-amount-wrapper p{
+  margin: 0;
+}
+.portfolio-amount.bold {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+.currency-change-wrapper {
+  display: flex;
+  padding: 40px 30px;
+}
+.currency-change-wrapper p{
+  margin: 0;
+}
+.currency-change{
+  display: flex;
+  width: 140px;
+  margin-right: 40px;
+  font-size: 14px;
+}
+.currency-change-wrapper .positive,
+.currency-change-wrapper .negative{
+  margin-left: 10px;
 }

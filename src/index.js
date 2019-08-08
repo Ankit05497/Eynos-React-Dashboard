@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { readdirSync } from 'fs';
 
 class Navigation extends React.Component {
     handleClick(val1,val2,val3,val4,val5,val6){
@@ -36,20 +37,104 @@ class Navigation extends React.Component {
 class CardView extends React.Component {
     render(){
         return(
-            <div class="card-wrapper">
-                <div class="button-wrapper"><button type="button"><img src="./assets/maestro.png"/><span>{this.props.card}</span></button></div>
-                <div class="window-icon"><img src="./assets/windows-client.png"/></div>
+            <div className="card-wrapper">
+                <div className="button-wrapper"><button type="button"><img src="./assets/maestro.png"/><span>{this.props.card}</span></button></div>
+                <div className="window-icon"><img src="./assets/windows-client.png"/></div>
             </div>
         )
     }
 }
-
+class PortfolioDetails extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            title: "",
+            amount: "",
+            change_amount: "",
+            change:"",
+            change_type:"",
+            currency_change: []
+        }
+    }
+    async getData(){
+        const _self = this;
+        await fetch('./mock_data/portfolio_data.json',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((responseText) => {
+            const resp = responseText.json();
+            resp.then((response) => {
+                _self.setState({
+                    title: response.data[0].title,
+                    amount: response.data[0].amount,
+                    change_amount:response.data[0].change_amount,
+                    change:response.data[0].change,
+                    change_type:response.data[0].change_type,
+                    currency_change:response.data[0].currency_change[0]
+                })
+            })
+        });
+    }
+    componentDidMount(){
+        this.getData();
+        console.log(this.state);
+    }
+    render(){
+        var divItem = <div></div>
+        if(this.state.currency_change){
+            const value = this.state.currency_change;
+            divItem = Object.keys(value).map((key) => (
+                <div className="currency-change">
+                    <div>
+                        <p className="bold">{value[key].amount}</p>
+                        <p className="secondary-color">{key}</p>
+                    </div>
+                    <div className={value[key].change_type === "positive"?"positive":"negative"}>
+                        {value[key].change}
+                    </div>
+                </div>
+            ))
+        }
+        return(
+            <div>
+            <div className="portfolio-main-wrapper">
+                <div className="portfolio-detail-wrapper">
+                    <div className="portfolio-detail-navigation">
+                        <div className="portfolio-heading bold">
+                            {this.state.title} 
+                        </div>
+                        <div className="portfolio-navigation links">
+                            <ul>
+                                <li ><a href="#">1d</a></li>
+                                <li><a href="#">5d</a></li>
+                                <li ><a href="#">1m</a></li>
+                                <li><a href="#">1y</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div className="portfolio-amount-wrapper">
+                    <p className="portfolio-amount bold">{this.state.amount}</p>
+                    <p className={this.state.change_type === "positive"?"positive": "negative"}><span>{this.state.change_amount}</span>{'(' + this.state.change + ')'}</p>
+                </div>
+            </div>
+            <div className="currency-change-wrapper">
+                {divItem}
+            </div>
+            </div>
+        )
+    }
+}
 class PortfolioView extends React.Component {
     render(){
         return (
-            <div class="portfolio-view-wrapper">
+            <div className="portfolio-view-wrapper">
                 <div className="mobile-app-ad"><img alt="mobileAd" src="./assets/crypto-image.jpg"/></div>
-                <div className="portfolio-description"></div>
+                <div className="portfolio-description">
+                    <PortfolioDetails />
+                </div>
             </div>
         )
     }
@@ -101,13 +186,13 @@ class CurrentTrend extends React.Component{
             const value = this.props.trends;
             const exchangeValue = Object.keys(value).map((key,index) => (
                 <li key={key} className={this.state.isAccordionOpen[index] ? "list-open exchange-list" : "exchange-list"}>
-                    <div class="exchange-list-wrapper">
-                        <div class="exchange-container">
+                    <div className="exchange-list-wrapper">
+                        <div className="exchange-container">
                             <p className="exchange-method">{key}</p>
                             <p class="currency-convert bold">{value[key].currency1}/{value[key].currency2}</p>
                         </div>
-                        <div class="average-container">
-                            <div class="average-container-wrapper">
+                        <div className="average-container">
+                            <div className="average-container-wrapper">
                                 <span className="average">Average</span><span className="average-value bold">{value[key].average}</span>
                                 <Accordion isOpen={this.handleClick} index={index}/>
                             </div>
@@ -217,8 +302,8 @@ class RateTable extends React.Component {
             const exchangeValue = Object.keys(value).map((key,index) => (
                 <li key={key} className="currency-list">
                     <div>
-                        <span class="crypto-currency">{key} = </span>
-                        <span class="currency-amount">{currency === 'INR' ? value[key].INR : value[key].USD}</span>
+                        <span className="crypto-currency">{key} = </span>
+                        <span className="currency-amount">{currency === 'INR' ? value[key].INR : value[key].USD}</span>
                         <span className={value[key].changeType === "positive"? "positive change" : "negative change"}>{value[key].change}
                         <Accordion isOpen={this.handleClick} index={index}/>
                         </span>
@@ -239,7 +324,7 @@ class NavigationContent extends React.Component {
     render(){
         if(this.props.isBuySell) {
             return (
-                <div class="navigation-content-wrapper">
+                <div className="navigation-content-wrapper">
                     <CardView card={this.props.card} />
                     <PortfolioView />
                     <ExchangeCurrency />
@@ -439,9 +524,9 @@ class CreateList extends React.Component {
             <li key={key} className="account-list">
                 <div>
                     <p>{items[key].stock}</p>
-                    <p class="account-amount">{items[key].amount}</p>
+                    <p className="account-amount">{items[key].amount}</p>
                 </div>
-                <div class="plus-container">
+                <div className="plus-container">
                     <img src="./assets/plus.png" alt="plus"/>
                 </div>
             </li>

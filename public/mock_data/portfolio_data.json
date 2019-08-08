@@ -1,0 +1,26 @@
+{
+    "data": [{
+      "title":"Portfolio 1",
+      "amount":"$ 5947",
+      "change_amount":"+ $ 256.23",
+      "change_type":"positive",
+      "change" : "12.3%",
+      "currency_change":[{
+          "MNR": {
+              "amount":"$234.14",
+              "change":"+2.42%",
+              "change_type": "positive"
+          },
+          "EUR_1": {
+            "amount":"$234.14",
+            "change":"+2.42%",
+            "change_type": "positive"
+        },
+        "USD": {
+            "amount":"$234.14",
+            "change":"-2.42%",
+            "change_type": "negative"
+        }
+      }]
+    }]
+  }
