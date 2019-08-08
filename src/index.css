@@ -207,6 +207,12 @@ body {
   background-color: #FFFFFF;
   padding: 40px 30px;
 }
+.exchange-wrapper ul{
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  margin-top: 40px;
+}
 .exchange-currency-wrapper{
   display: flex;
 }
@@ -216,4 +222,31 @@ body {
 }
 .exchange-currency-wrapper .currency-selector select{
   float: right;
+}
+
+.exchange-wrapper .currency-list {
+  margin-bottom: 30px;
+  font-size: 14px;
+}
+.exchange-wrapper .currency-list .change{
+  float: right;
+}
+.exchange-wrapper .currency-list .positive{
+  color: #91CA9C;
+}
+.exchange-wrapper .currency-list .negative{
+  color: #E5716F;
+}
+.exchange-wrapper .currency-list .crypto-currency{
+  color: #BFC0CB;
+}
+.exchange-wrapper .currency-list .currency-amount{
+  color: #353535;
+  border-bottom: 1px dotted #C2C4CD;
+  font-weight: bold;
+}
+.exchange-wrapper .currency-list img{
+  width: 16px;
+  height: 16px;
+  margin-left: 30px;
 }

@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { throwStatement, thisExpression } from '@babel/types';
 
 class Navigation extends React.Component {
     handleClick(val1,val2,val3,val4,val5,val6){
@@ -112,7 +111,7 @@ class ExchangeCurrency extends React.Component {
                         <Select label="Price" placeholder={this.state.currencySelected} options={this.state.currencies} currencySelected={this.handleCurrency}/>
                     </div>
                 </div>
-                <RateTable currency={this.state.currencySelected}/>
+                <RateTable currency={this.state.currencySelected} rates={this.state.rates[0]}/>
             </div>
         )
     }
@@ -120,9 +119,24 @@ class ExchangeCurrency extends React.Component {
 
 class RateTable extends React.Component {
     render(){
-        return(
-            <p>{this.props.currency}</p>
-        )
+        if(this.props.rates){
+            const value = this.props.rates;
+            const currency = this.props.currency;
+            const exchangeValue = Object.keys(value).map((key) => (
+                <li key={key} className="currency-list">
+                    <div>
+                        <span class="crypto-currency">{key} = </span>
+                        <span class="currency-amount">{currency === 'INR' ? value[key].INR : value[key].USD}</span>
+                        <span className={value[key].changeType === "positive"? "positive change" : "negative change"}>{value[key].change}<img src="./assets/expand-arrow.png" alt="Expand"/></span>
+                    </div>
+                </li>
+                
+            ))
+            return(
+                <ul>{exchangeValue}</ul>
+            )
+        }
+        else return(<p>Nothing to show</p>)
     }
 }
 
