@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import { readdirSync } from 'fs';
 
 class Navigation extends React.Component {
     handleClick(val1,val2,val3,val4,val5,val6){
