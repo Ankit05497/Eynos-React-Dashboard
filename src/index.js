@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
+import { throwStatement, thisExpression } from '@babel/types';
 
 class Navigation extends React.Component {
     handleClick(val1,val2,val3,val4,val5,val6){
@@ -55,6 +56,76 @@ class PortfolioView extends React.Component {
     }
 }
 
+class Select extends React.Component {
+    render(){
+        var listItems = this.props.options.map((option, index) => <option key={index}>{option}</option>)
+        return(
+            <select onChange={(e)=> this.props.currencySelected(e.target.value)}>
+                {listItems}
+            </select>
+        )
+    }
+}
+  
+class ExchangeCurrency extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            currencySelected: "USD",
+            currencies: [],
+            rates: []
+        }
+    }
+    async getData(){
+        const _self = this;
+        await fetch('./mock_data/rates.json',{
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            }
+        }).then((responseText) => {
+            const resp = responseText.json();
+            resp.then((response) => {
+                _self.setState({
+                    currencies: response.data[0].currencies,
+                    rates: response.data[0].currency_rates
+                })
+            })
+        });
+    }
+    componentDidMount(){
+        this.getData();
+    }
+    handleCurrency = (currency) => {
+        this.setState({
+            currencySelected:currency
+        })
+    }
+    render(){
+        return(
+            <div className="exchange-wrapper">
+                <div className="exchange-currency-wrapper">
+                    <div className="rate-heading">
+                        Rates
+                    </div>
+                    <div className="currency-selector">
+                        <Select label="Price" placeholder={this.state.currencySelected} options={this.state.currencies} currencySelected={this.handleCurrency}/>
+                    </div>
+                </div>
+                <RateTable currency={this.state.currencySelected}/>
+            </div>
+        )
+    }
+}
+
+class RateTable extends React.Component {
+    render(){
+        return(
+            <p>{this.props.currency}</p>
+        )
+    }
+}
+
 class NavigationContent extends React.Component {
     render(){
         if(this.props.isBuySell) {
@@ -62,6 +133,7 @@ class NavigationContent extends React.Component {
                 <div class="navigation-content-wrapper">
                     <CardView card={this.props.card} />
                     <PortfolioView />
+                    <ExchangeCurrency />
                 </div>
             )
         }

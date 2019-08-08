@@ -200,3 +200,20 @@ body {
   border-radius: 10px;
   margin-left: 16px;
 }
+.exchange-wrapper {
+  width: 430px;
+  border-radius: 10px;
+  margin-top: 20px;
+  background-color: #FFFFFF;
+  padding: 40px 30px;
+}
+.exchange-currency-wrapper{
+  display: flex;
+}
+.exchange-currency-wrapper .rate-heading,
+.exchange-currency-wrapper .currency-selector{
+  width: 50%;
+}
+.exchange-currency-wrapper .currency-selector select{
+  float: right;
+}
