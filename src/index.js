@@ -65,6 +65,52 @@ class Select extends React.Component {
         )
     }
 }
+
+class CurrentTrend extends React.Component{
+    constructor(props) {
+        super(props);
+        this.state = {
+            isAccordionOpen : false
+        }
+    }
+
+    handleClick = (isOpen) => {
+        this.setState({
+            isAccordionOpen: isOpen
+        })
+    }
+    
+    render(){
+        if(this.props.trends){
+            const value = this.props.trends;
+            const exchangeValue = Object.keys(value).map((key) => (
+                <li key={key} className="exchange-list">
+                    <div class="exchange-container">
+                        <p className="exchange-method">{key}</p>
+                        <p class="currency-convert bold">{value[key].currency1}/{value[key].currency2}</p>
+                    </div>
+                    <div class="average-container">
+                        <div class="average-container-wrapper">
+                            <span className="average">Average</span><span className="average-value bold">{value[key].average}</span>
+                            <Accordion isOpen={this.handleClick}/>
+                        </div>
+                    </div>
+                </li>
+                
+            ))
+            return (
+                <div className="current-trend-wrapper">
+                    <div className="current-trend-heading"><span className="bold">Current Trend</span> this week</div>
+                    <ul>{exchangeValue}</ul>
+                </div>
+            )
+        }
+        else
+        return(
+            <p>Nothing to show</p>
+        )
+    }
+}
   
 class ExchangeCurrency extends React.Component {
     constructor(props){
@@ -72,7 +118,8 @@ class ExchangeCurrency extends React.Component {
         this.state = {
             currencySelected: "USD",
             currencies: [],
-            rates: []
+            rates: [],
+            currentTrends: []
         }
     }
     async getData(){
@@ -87,7 +134,8 @@ class ExchangeCurrency extends React.Component {
             resp.then((response) => {
                 _self.setState({
                     currencies: response.data[0].currencies,
-                    rates: response.data[0].currency_rates
+                    rates: response.data[0].currency_rates,
+                    currentTrends:response.data[0].currentTrends
                 })
             })
         });
@@ -102,22 +150,45 @@ class ExchangeCurrency extends React.Component {
     }
     render(){
         return(
-            <div className="exchange-wrapper">
-                <div className="exchange-currency-wrapper">
-                    <div className="rate-heading">
-                        Rates
+            <div className="exchange">
+                <div className="exchange-wrapper">
+                    <div className="exchange-currency-wrapper">
+                        <div className="rate-heading">
+                            Rates
+                        </div>
+                        <div className="currency-selector">
+                            <Select label="Price" placeholder={this.state.currencySelected} options={this.state.currencies} currencySelected={this.handleCurrency}/>
+                        </div>
                     </div>
-                    <div className="currency-selector">
-                        <Select label="Price" placeholder={this.state.currencySelected} options={this.state.currencies} currencySelected={this.handleCurrency}/>
-                    </div>
+                    <RateTable currency={this.state.currencySelected} rates={this.state.rates[0]}/>
                 </div>
-                <RateTable currency={this.state.currencySelected} rates={this.state.rates[0]}/>
+                <div className="current-trends">
+                    <CurrentTrend trends={this.state.currentTrends[0]}/>
+                </div>
             </div>
         )
     }
 }
 
+class AccordionContentExchange extends React.Component {
+    render(){
+        if(this.props.view) return (<p>Accordion content when open</p>)
+        else return null
+    }
+}
 class RateTable extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            isAccordionOpen : false
+        }
+    }
+
+    handleClick = (isOpen) => {
+        this.setState({
+            isAccordionOpen: isOpen
+        })
+    }
     render(){
         if(this.props.rates){
             const value = this.props.rates;
@@ -127,8 +198,11 @@ class RateTable extends React.Component {
                     <div>
                         <span class="crypto-currency">{key} = </span>
                         <span class="currency-amount">{currency === 'INR' ? value[key].INR : value[key].USD}</span>
-                        <span className={value[key].changeType === "positive"? "positive change" : "negative change"}>{value[key].change}<img src="./assets/expand-arrow.png" alt="Expand"/></span>
+                        <span className={value[key].changeType === "positive"? "positive change" : "negative change"}>{value[key].change}
+                        <Accordion isOpen={this.handleClick}/>
+                        </span>
                     </div>
+                    <AccordionContentExchange view={this.state.isAccordionOpen} transactionDetails={this.props.details}/>
                 </li>
                 
             ))
@@ -231,12 +305,24 @@ class NavLinks extends React.Component {
 }
 
 class Accordion extends React.Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            isOpen : true
+        }
+    }
+    handleClick(){
+        this.setState({
+            isOpen : !this.state.isOpen
+        })
+        this.props.isOpen(this.state.isOpen);
+    }
     render(){
-        if(this.props.isOpen) return(
-            <span onClick={()=> this.props.isClicked(false)}><img src="./assets/collapse-arrow.png" alt="Collapse"/></span>
+        if(!this.state.isOpen) return(
+            <span onClick={()=> this.handleClick()}><img src="./assets/collapse-arrow.png" alt="Collapse"/></span>
         )    
         else return(
-            <span onClick={() => this.props.isClicked(true)}><img src="./assets/expand-arrow.png" alt="Expand"/></span>
+            <span onClick={() => this.handleClick()}><img src="./assets/expand-arrow.png" alt="Expand"/></span>
         )
     }
 }
@@ -278,7 +364,7 @@ class PersonalizedView extends React.Component {
                 <div className="balanceView">
                     <p>
                         <span className="balance">{this.props.balance}</span>
-                        <Accordion  isClicked={this.handleClick} isOpen={this.state.isAccordionOpen}/>
+                        <Accordion  isOpen={this.handleClick}/>
                     </p>
                     <div className="accordionView">
                         <AccordionContent view={this.state.isAccordionOpen} transactionDetails={this.props.details}/>

@@ -20,6 +20,20 @@
                 "changeType":"negative",
                 "change":"-1.93%"
             }
+        }],
+        "currentTrends":[{
+            "Bid":{
+                "currency1":"BTC",
+                "currency2":"XPR",
+                "rate":"143",
+                "average":"500 XPR"
+            },
+            "Change":{
+                "currency1":"MNR",
+                "currency2":"USD",
+                "rate":"143",
+                "average":"12 ETH"
+            }
         }]
     }]
 }
